@@ -1,3 +1,4 @@
+echo -n -e "\033]0;FBTerminal\007"
 scriptPath=${0%/*}
 if [ $# -ne 1 ]
 	then
