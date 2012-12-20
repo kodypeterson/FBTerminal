@@ -1,2 +1,9 @@
 scriptPath=${0%/*}
+if [ $# -ne 1 ]
+	then
+		export LOGO="FB"
+	else
+		#LOGO NEEDS TO BE STEALTH
+		export LOGO="STEALTH"
+fi
 $scriptPath/resources/application_run "login"

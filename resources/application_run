@@ -53,23 +53,23 @@ function header
 	color_start "00;31;44"
 	fill_screen
 	color_start "1;37;44"
-	LINE=$(head -1 $scriptPath/resources/logo.ascii | tail -1);echo -n "$LINE"
+	LINE=$(head -1 "$scriptPath/resources/$(echo $LOGO)_logo.ascii" | tail -1);echo -n "$LINE"
 	color_start "00;31;44"
 	fill_screen
 	color_start "1;37;44"
-	LINE=$(head -2 $scriptPath/resources/logo.ascii | tail -1);echo -n "$LINE"
+	LINE=$(head -2 $scriptPath/resources/$(echo $LOGO)_logo.ascii | tail -1);echo -n "$LINE"
    color_start "00;31;44"
    fill_screen
 	color_start "1;37;44"
-	LINE=$(head -3 $scriptPath/resources/logo.ascii | tail -1);echo -n "$LINE"
+	LINE=$(head -3 $scriptPath/resources/$(echo $LOGO)_logo.ascii | tail -1);echo -n "$LINE"
    color_start "00;31;44"
    fill_screen
 	color_start "1;37;44"
-	LINE=$(head -4 $scriptPath/resources/logo.ascii | tail -1);echo -n "$LINE"
+	LINE=$(head -4 $scriptPath/resources/$(echo $LOGO)_logo.ascii | tail -1);echo -n "$LINE"
    color_start "00;31;44"
    fill_screen
 	color_start "1;37;44"
-	LINE=$(head -5 $scriptPath/resources/logo.ascii | tail -1);echo -n "$LINE"
+	LINE=$(head -5 $scriptPath/resources/$(echo $LOGO)_logo.ascii | tail -1);echo -n "$LINE"
    color_start "00;31;44"
    fill_screen
 	fill_screen
