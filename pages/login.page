@@ -1,0 +1,40 @@
+#######################################
+#                                     #
+#              VARIABLES              #
+#                                     #
+#######################################
+if [ $# -ne 2 ]
+	then
+		action="Please Enter Your Email Address:"
+	else
+		email="$2"
+		password=true
+		action="Please Enter Your Password:"
+fi
+
+#######################################
+#                                     #
+#              FUNCTIONS              #
+#                                     #
+#######################################
+function page_action
+{
+	if [ -z "$email" ]
+		then
+			goto "login $1"
+		else
+			goto "pleaseWait $1""-$email"
+	fi
+}
+
+#######################################
+#                                     #
+#           PAGE CONTENT              #
+#                                     #
+#######################################
+if [ $# -ne 2 ]
+	then
+		heading "Login Below"
+	else
+		heading "Login Below" $2
+fi

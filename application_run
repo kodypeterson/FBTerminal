@@ -1,0 +1,168 @@
+#VARIABLES
+scriptPath=${0%/*}
+page=$1
+width=$(tput cols)
+height=$(tput lines)
+currently_coloring=false
+color_support=$(tput colors)
+if [ $color_support -gt 2 ]
+	then
+      color_support=true
+   else
+      color_support=false
+fi
+
+#######################################
+#                                     #
+#             FUNCTIONS               #
+#                                     #
+#######################################
+
+function color_start
+{
+	if $color_support
+		then
+			if $currently_coloring
+				then
+					color_stop
+			fi
+			echo -en "\033[$1""m"
+			currently_coloring=true
+	fi
+}
+
+function color_stop
+{
+	if $color_support
+		then
+			echo -en '\033[0m'
+			currently_coloring=false
+	fi
+}
+
+function header
+{
+	color_start "00;31;44"
+	fill_screen
+	color_start "1;37;44"
+	LINE=$(head -1 $scriptPath/resources/logo.ascii | tail -1);echo -n "$LINE"
+	color_start "00;31;44"
+	fill_screen
+	color_start "1;37;44"
+	LINE=$(head -2 $scriptPath/resources/logo.ascii | tail -1);echo -n "$LINE"
+   color_start "00;31;44"
+   fill_screen
+	color_start "1;37;44"
+	LINE=$(head -3 $scriptPath/resources/logo.ascii | tail -1);echo -n "$LINE"
+   color_start "00;31;44"
+   fill_screen
+	color_start "1;37;44"
+	LINE=$(head -4 $scriptPath/resources/logo.ascii | tail -1);echo -n "$LINE"
+   color_start "00;31;44"
+   fill_screen
+	color_start "1;37;44"
+	LINE=$(head -5 $scriptPath/resources/logo.ascii | tail -1);echo -n "$LINE"
+   color_start "00;31;44"
+   fill_screen
+	fill_screen
+	fill_screen
+	color_stop
+	newline
+	newline
+}
+
+function fill_screen
+{
+	get_position
+	for (( i=$col ; i<$width ; i++ )); do echo -n " " ; done
+}
+
+function finish_page
+{
+	get_position
+	for (( j=($row+2) ; j<$height ; j++ )); do fill_screen;newline; done
+	if [ -z "$password" ]
+		then
+			read -p "$action " answer
+		else
+			#THIS IS A PASSWORD OR SOMETHING THAT NEEDS TO BE HIDDEN
+			read -s -p "$action " answer
+	fi
+	page_action "$answer"
+}
+
+function get_position
+{
+	oldstty=$(stty -g)
+	stty raw -echo min 0
+	echo -en "\033[6n" > /dev/tty
+	IFS=';' read -r -d R -a pos
+	stty $oldstty
+	# change from one-based to zero based so they work with: tput cup $row $col
+	row=$((${pos[0]:2} - 1))
+	col=$((${pos[1]} - 1))
+}
+
+function newline
+{
+	echo -en "\n"
+}
+
+function center
+{
+	#GET STRING LENGTH
+	length=`echo ${#1}`
+	left=`echo $(((width/2)-(length/2)))`
+	for (( i=0 ; i<$left ; i++ )); do echo -n " " ; done
+	echo -n "$1"
+	get_position
+	for (( i=$col ; i<$width ; i++ )); do echo -n " " ; done
+}
+
+function goto
+{
+	$scriptPath/application_run $1
+}
+
+function heading
+{
+	top="==========================="
+	top_length=`echo ${#top}`
+	center $top
+	center "=                         ="
+	length=`echo ${#1}`
+	left=`echo $(((top_length/2)-(length/2)))`
+	text=""
+	for (( i=0 ; i<$left ; i++ )); do text="$text " ; done
+	text="$text""$1"
+	right=`echo $((top_length-(length+left+2)))`
+	for (( i=0 ; i<$right ; i++ )); do text="$text " ; done
+	center "=$text="
+	center "=                         ="
+	if [ -z "$2" ]
+		then
+			temp=""
+		else
+			length=`echo ${#2}`
+	   	left=`echo $(((top_length/2)-(length/2)))`
+   		text=""
+   		for (( i=0 ; i<$left ; i++ )); do text="$text " ; done
+   		text="$text""$2"
+   		right=`echo $((top_length-(length+left+2)))`
+   		for (( i=0 ; i<$right ; i++ )); do text="$text " ; done
+   		center "=$text="
+			center "=                         ="
+	fi
+	center "==========================="
+}
+
+#######################################
+#                                     #
+#             APPLICATION             #
+#                                     #
+#######################################
+
+clear
+header
+source "$scriptPath""/pages/""$page"".page"
+finish_page
