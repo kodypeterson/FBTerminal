@@ -3,7 +3,7 @@
 #              VARIABLES              #
 #                                     #
 #######################################
-action="Select a Menu Option (1-10):"
+action=""
 
 #######################################
 #                                     #
@@ -12,15 +12,7 @@ action="Select a Menu Option (1-10):"
 #######################################
 function page_action
 {
-	if [ $1 == 2 ]
-		then
-		goto "updateStatus"
-	elif [ $1 == 10 ]
-		then
-		goto "goodbye"
-	else
-		goto "home"	
-	fi
+	goto "home"
 }
 
 #######################################
@@ -28,14 +20,4 @@ function page_action
 #           PAGE CONTENT              #
 #                                     #
 #######################################
-heading "Welcome to FBTerminal" "$FBTerminalfirst_name ""$FBTerminallast_name"
-
-columns 2
-column_data "1. View News Feed"
-column_data "2. Update Satus"
-column_data "3. Send Message"
-column_data "4. Chat"
-column_data "8. Submit Bug/Suggestion"
-column_data "9. Check For Updates"
-column_data "10. Exit"
-columns end
+heading "Update Canceled!" "Press Enter"

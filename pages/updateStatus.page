@@ -12,11 +12,16 @@ action="What is your new status?"
 #######################################
 function page_action
 {
-	value="$(perl -MURI::Escape -e 'print uri_escape($ARGV[0]);' "$1")"
-	value=$1
-	result=`curl -s "https://graph.facebook.com/me/feed" -F "access_token=$ACCESS_TOKEN" -F "message=$value"`
+	if [ ! "$1" ]
+		then
+			goto "canceled"
+		else
+			value="$(perl -MURI::Escape -e 'print uri_escape($ARGV[0]);' "$1")"
+			value=$1
+			result=`curl -s "https://graph.facebook.com/me/feed" -F "access_token=$ACCESS_TOKEN" -F "message=$value"`
 
-	goto "success"
+			goto "success"
+	fi
 }
 
 #######################################
@@ -25,3 +30,4 @@ function page_action
 #                                     #
 #######################################
 heading "Update Status" "Enter Status Below"
+center "To cancel, submit emtpy status"
