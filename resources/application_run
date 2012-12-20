@@ -1,5 +1,6 @@
 #VARIABLES
 scriptPath=${0%/*}
+scriptPath=`echo $scriptPath | sed 's/resources//g'`
 page=$1
 width=$(tput cols)
 height=$(tput lines)
@@ -128,7 +129,7 @@ function center
 
 function goto
 {
-	$scriptPath/application_run $1
+	$scriptPath/resources/application_run $1
 }
 
 function heading

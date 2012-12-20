@@ -1,2 +1,2 @@
 scriptPath=${0%/*}
-$scriptPath/application_run "login"
+$scriptPath/resources/application_run "login"
