@@ -13,6 +13,11 @@ action=""
 function page_action
 {
 	clear
+	newline
+	echo "FBTerminal Closed! Please close terminal window!"
+	newline
+	newline
+	exit 0
 }
 
 #######################################
