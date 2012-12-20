@@ -3,7 +3,7 @@
 #              VARIABLES              #
 #                                     #
 #######################################
-action="Select a Menu Option (1-10):"
+action=""
 
 #######################################
 #                                     #
@@ -12,17 +12,18 @@ action="Select a Menu Option (1-10):"
 #######################################
 function page_action
 {
-	if [ $1 == 2 ]
-		then
-		goto "updateStatus"
-	elif [ $1 == 10 ]
-		then
-		goto "goodbye"
-	elif [ $1 == 9 ]
-		then
-		goto "checkUpdate"
-	else
-		goto "home"	
+	if [ ! "$1" ]
+      then
+         goto "home"
+		else
+			if [ $1 == "y" ] || [ $1 == "Y" ]
+				then
+					#DO THE UPDATE
+					goto "success"
+				else
+					#SKIP UPDATE
+					goto "home"
+			fi
 	fi
 }
 
@@ -31,14 +32,16 @@ function page_action
 #           PAGE CONTENT              #
 #                                     #
 #######################################
-heading "Welcome to FBTerminal" "$FBTerminalfirst_name ""$FBTerminallast_name"
 
-columns 2
-column_data "1. View News Feed"
-column_data "2. Update Satus"
-column_data "3. Send Message"
-column_data "4. Chat"
-column_data "8. Submit Bug/Suggestion"
-column_data "9. Check For Updates"
-column_data "10. Exit"
-columns end
+githubVersion=`curl -s "https://raw.github.com/headwebmonkey/FBTerminal/master/resources/currentVersion"`
+
+if [ $githubVersion == $version ]
+	then
+		#UPDATE NOT NEEDED
+		action="Press Enter To Continue"
+		heading "Check Updates" "You Have The Latest!"
+	else
+		#UPDATE NEEDED
+		action="Would You Like To Update? (y/n):"
+		heading "Check Updates" "Update Avaliable!"
+fi

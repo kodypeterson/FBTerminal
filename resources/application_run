@@ -1,4 +1,5 @@
 #VARIABLES
+version="0.0.1"
 scriptPath=${0%/*}
 scriptPath=`echo $scriptPath | sed 's/resources//g'`
 page=$1
