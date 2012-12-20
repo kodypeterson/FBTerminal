@@ -1,0 +1,36 @@
+localhost - - [20/Dec/2012 15:56:22] "GET / HTTP/1.1" 200 -
+localhost - - [20/Dec/2012 15:56:22] code 404, message File not found
+localhost - - [20/Dec/2012 15:56:22] "GET /favicon.ico HTTP/1.1" 404 -
+localhost - - [20/Dec/2012 15:56:22] code 404, message File not found
+localhost - - [20/Dec/2012 15:56:22] "GET /favicon.ico HTTP/1.1" 404 -
+localhost - - [20/Dec/2012 15:56:22] code 404, message File not found
+localhost - - [20/Dec/2012 15:56:22] "GET /favicon.ico HTTP/1.1" 404 -
+localhost - - [20/Dec/2012 15:56:22] code 404, message File not found
+localhost - - [20/Dec/2012 15:56:22] "GET /favicon.ico HTTP/1.1" 404 -
+localhost - - [20/Dec/2012 15:56:22] code 404, message File not found
+localhost - - [20/Dec/2012 15:56:22] "GET /favicon.ico HTTP/1.1" 404 -
+localhost - - [20/Dec/2012 15:56:39] "GET / HTTP/1.1" 200 -
+localhost - - [20/Dec/2012 15:56:39] code 404, message File not found
+localhost - - [20/Dec/2012 15:56:39] "GET /favicon.ico HTTP/1.1" 404 -
+localhost - - [20/Dec/2012 15:56:39] code 404, message File not found
+localhost - - [20/Dec/2012 15:56:39] "GET /favicon.ico HTTP/1.1" 404 -
+localhost - - [20/Dec/2012 15:56:39] code 404, message File not found
+localhost - - [20/Dec/2012 15:56:39] "GET /favicon.ico HTTP/1.1" 404 -
+localhost - - [20/Dec/2012 15:56:39] code 404, message File not found
+localhost - - [20/Dec/2012 15:56:39] "GET /favicon.ico HTTP/1.1" 404 -
+localhost - - [20/Dec/2012 15:56:39] code 404, message File not found
+localhost - - [20/Dec/2012 15:56:39] "GET /favicon.ico HTTP/1.1" 404 -
+localhost - - [20/Dec/2012 15:56:40] code 404, message File not found
+localhost - - [20/Dec/2012 15:56:40] "GET /token.htm?t=AAADKKZBQ2Q2gBAGNbidUgS54EcjIksiuEZCNpU9rF5NIvBcdSLxgAqtx9n9A7WQWu0lW01A4jNAZB9mKRrlZCWkaGHYseug1NjLbu7p0THNrvcmjff52 HTTP/1.1" 404 -
+localhost - - [20/Dec/2012 15:58:35] code 404, message File not found
+localhost - - [20/Dec/2012 15:58:35] "GET /favicon.ico HTTP/1.1" 404 -
+localhost - - [20/Dec/2012 15:58:35] code 404, message File not found
+localhost - - [20/Dec/2012 15:58:35] "GET /favicon.ico HTTP/1.1" 404 -
+localhost - - [20/Dec/2012 16:00:58] code 404, message File not found
+localhost - - [20/Dec/2012 16:00:58] "GET /favicon.ico HTTP/1.1" 404 -
+localhost - - [20/Dec/2012 16:00:58] code 404, message File not found
+localhost - - [20/Dec/2012 16:00:58] "GET /favicon.ico HTTP/1.1" 404 -
+localhost - - [20/Dec/2012 16:04:58] code 404, message File not found
+localhost - - [20/Dec/2012 16:04:58] "GET /favicon.ico HTTP/1.1" 404 -
+localhost - - [20/Dec/2012 16:04:59] code 404, message File not found
+localhost - - [20/Dec/2012 16:04:59] "GET /favicon.ico HTTP/1.1" 404 -

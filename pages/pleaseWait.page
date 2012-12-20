@@ -20,34 +20,20 @@ function page_action
 #           PAGE CONTENT              #
 #                                     #
 #######################################
-heading "Please Wait" "Logging In"
+heading "Login to Facebook" "We Opened A Browser"
 
-cookiePath="$scriptPath""/resources/cookie.txt"
-touch $cookiePath
+tail -f $scriptPath/resources/facebook/pythonHTTPServer.log | grep -m 1 "token" | xargs echo "" >> $scriptPath/resources/facebook/pythonHTTPServer.log \;
 
-#LETS GET THE INITIAL COOKIES NEEDED
-loginpage=`curl -s -c $cookiePath -A "Mozilla/5.0" "http://m.facebook.com"`
+export ACCESS_TOKEN=`tail $scriptPath/resources/facebook/pythonHTTPServer.log | grep -m 1 "token" | sed 's/^[^_]*t=//g' | sed 's/ .*//';`
 
-#LOGIN PARAMETERS
-form_action=`echo "$loginpage" | tr '"' "\n" | grep "https://www.facebook.com/login.php"`
-form_data=`echo "$loginpage" | sed -e 's/.*<form//' | sed -e 's/form>.*//' | tr '/>' "\n" | grep 'input ' | grep -v "email\|pass"`
+#LETS GET A LONG LIVED TOKEN
+export ACCESS_TOKEN=`curl -s "https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=222289861165928&client_secret=9c7a555819d7c00dab88bc378a37eab1&fb_exchange_token=$ACCESS_TOKEN" | sed 's/&.*//' | sed 's/^[^_]*access_token=//g';`
 
-#FUNCTION PARSES FORM DATA LIKE HIDDEN INPUTS
-function parse_form() {
-	form_data="$1"
-	params=""
-	for (( i=1; i <= `echo "$form_data" | wc -l` ; i++ ))
-	do
-		name=`echo "$form_data" | sed -n "$i"p | tr ' ' "\n" | grep 'name' | cut -d '"' -f 2`
-		value=`echo "$form_data" | sed -n "$i"p | tr ' ' "\n" | grep 'value' | cut -d '"' -f 2`
-		params="$params$name=$value&"
-	done
-	echo "$params"
-}
+echo $ACCESS_TOKEN > $scriptPath/resources/facebook/token.sec
+temp=`epoch`
+temp=$((temp + 5184000))
+echo $temp >> $scriptPath/resources/facebook/token.sec
 
-#LOGIN
-params="email=$email&pass=$pass&"`parse_form "$form_data"`
-logged_in=`curl -s -b $cookiePath -c $cookiePath -A "Mozilla/5.0" -d "$params" -L "$form_action"`
-homepage=`curl -s -b $cookiePath -c $cookiePath -A "Mozilla/5.0" -L "http://m.facebook.com/profile.php"`
+getUserInfo
 
-echo $homepage
+goto "home"

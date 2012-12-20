@@ -14,6 +14,13 @@ fi
 
 #######################################
 #                                     #
+#           FACEBOOK VARS             #
+#                                     #
+#######################################
+user_info="https://graph.facebook.com/me"
+
+#######################################
+#                                     #
 #             FUNCTIONS               #
 #                                     #
 #######################################
@@ -154,6 +161,61 @@ function heading
 			center "=                         ="
 	fi
 	center "==========================="
+	newline
+	newline
+	newline
+	newline
+}
+
+function epoch
+{
+	date +%s
+}
+
+function getUserInfo
+{
+   userInfo=`curl -s "https://graph.facebook.com/me?access_token=$ACCESS_TOKEN"`
+   export FBTerminalfirst_name=`echo $userInfo | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["first_name"]'`
+   export FBTerminallast_name=`echo $userInfo | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["last_name"]'`
+	export FBTerminalid=`echo $userInfo | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["id"]'`
+}
+
+function columns
+{
+	if [ $1 == "end" ]
+		then
+			columns=false
+		else
+			column_count=1
+			coumns=true
+			columns_max=$1
+			columns_margin=$((width/8))
+			columns_width=$((width-(columns_margin*2)))
+			columns_width=$((columns_width/columns_max))
+	fi
+}
+
+function column_data
+{
+	if [ $column_count -gt $columns_max ]
+		then
+			column_count=1
+	fi
+	if [ $column_count -ne  $columns_max ]
+		then
+			#NEED THE LEFT MARGIN
+			for (( i=0 ; i<$columns_margin ; i++ )); do echo -n " " ; done
+			echo -n $1
+			#NEED THE REST OF THE COLUMN SPACE
+			length=`echo ${#1}`
+			left=$((columns_width-length))
+			for (( i=0 ; i<$left ; i++ )); do echo -n " " ; done
+		else
+			echo $1
+			newline
+			newline
+	fi
+	column_count=$((column_count+1))
 }
 
 #######################################
@@ -164,5 +226,18 @@ function heading
 
 clear
 header
+if [ -f $scriptPath/resources/facebook/token.sec ]
+	then
+		TOKEN_EXPIRES=$(head -2 $scriptPath/resources/facebook/token.sec | tail -1);
+		if [ $((`epoch`)) -lt $TOKEN_EXPIRES ] && [ $page == "login" ]
+			then
+				heading "Please Wait" "Loading Info"
+				export ACCESS_TOKEN=$(head -1 $scriptPath/resources/facebook/token.sec | tail -1);
+				getUserInfo
+				clear
+				header
+				page="home"
+		fi
+fi
 source "$scriptPath""/pages/""$page"".page"
 finish_page

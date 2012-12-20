@@ -3,7 +3,7 @@
 #              VARIABLES              #
 #                                     #
 #######################################
-action="Select a Menu Option (1-10):"
+action="What is your new status?"
 
 #######################################
 #                                     #
@@ -12,14 +12,11 @@ action="Select a Menu Option (1-10):"
 #######################################
 function page_action
 {
-	if [ $1 == 2 ]
-		then
-		goto "updateStatus"
-	fi
-	if [ $1 == 10 ]
-		then
-		goto "goodbye"
-	fi
+	value="$(perl -MURI::Escape -e 'print uri_escape($ARGV[0]);' "$1")"
+	value=$1
+	result=`curl -s "https://graph.facebook.com/me/feed" -F "access_token=$ACCESS_TOKEN" -F "message=$value"`
+
+	goto "success"
 }
 
 #######################################
@@ -27,11 +24,4 @@ function page_action
 #           PAGE CONTENT              #
 #                                     #
 #######################################
-heading "Welcome to FBTerminal" "$FBTerminalfirst_name ""$FBTerminallast_name"
-
-columns 2
-column_data "1. View News Feed"
-column_data "2. Update Satus"
-column_data "3. Send Message"
-column_data "10. Exit"
-columns end
+heading "Update Status" "Enter Status Below"

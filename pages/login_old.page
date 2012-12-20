@@ -3,7 +3,14 @@
 #              VARIABLES              #
 #                                     #
 #######################################
-action="Select a Menu Option (1-10):"
+if [ $# -ne 2 ]
+	then
+		action="Please Enter Your Email Address:"
+	else
+		email="$2"
+		password=true
+		action="Please Enter Your Password:"
+fi
 
 #######################################
 #                                     #
@@ -12,13 +19,11 @@ action="Select a Menu Option (1-10):"
 #######################################
 function page_action
 {
-	if [ $1 == 2 ]
+	if [ -z "$email" ]
 		then
-		goto "updateStatus"
-	fi
-	if [ $1 == 10 ]
-		then
-		goto "goodbye"
+			goto "login $1"
+		else
+			goto "pleaseWait $1""-$email"
 	fi
 }
 
@@ -27,11 +32,9 @@ function page_action
 #           PAGE CONTENT              #
 #                                     #
 #######################################
-heading "Welcome to FBTerminal" "$FBTerminalfirst_name ""$FBTerminallast_name"
-
-columns 2
-column_data "1. View News Feed"
-column_data "2. Update Satus"
-column_data "3. Send Message"
-column_data "10. Exit"
-columns end
+if [ $# -ne 2 ]
+	then
+		heading "Login Below"
+	else
+		heading "Login Below" $2
+fi
